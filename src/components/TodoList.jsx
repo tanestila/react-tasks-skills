@@ -1,31 +1,15 @@
-import React, { useState } from 'react';
-import TodoFrom from "./TodoForm"
-import Todo from "./Todo"
+import React, { useState } from "react";
+import { Item } from "./Item";
 
-function TodoList(props) {
-  const [todos, setTodos] = useState([])
+function TodoList({ items = [], completeTodo }) {
+  const [edit, setEdit] = useState({
+    id: null,
+    value: "",
+  });
 
-  const addTodo = (todo) => {
-    if (!todo.text || /^\s*$/.test(todo.text))
-      return
-    const newTodos = [todo, ...todos]
-    setTodos(newTodos)
-  }
-
-  const completeTodo = (todo) => {
-
-  }
-
-  return (
-    <div>
-      <TodoFrom
-        onSubmit={addTodo} />
-      <Todo
-        todos={todos}
-        completeTodo={completeTodo}
-      />
-    </div>
-  );
+  return items.map((todo, index) => (
+    <Item complete={completeTodo} data={todo} key={todo.id + "" + index} />
+  ));
 }
 
 export default TodoList;
