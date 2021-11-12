@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter, Link, Route, Switch } from "react-router-dom";
+import React from "react";
+import { Link } from "react-router-dom";
 
 function Menu() {
   return (

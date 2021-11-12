@@ -14,6 +14,7 @@ function AddForm(props) {
     props.onSubmit({
       id: Math.floor(Math.random() * 10000),
       text: input,
+      complete: false,
     });
     setInput("");
   };

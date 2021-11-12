@@ -13,7 +13,10 @@ export default function TodoPage() {
     setTodos(newTodos);
   };
 
-  const completeTodo = (todo) => {};
+  const completeTodo = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].complete = !newTodos[index].complete;
+  };
 
   return (
     <Grid

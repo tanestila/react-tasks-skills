@@ -1,18 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
+import { Box, List } from "@material-ui/core";
+import { Item } from "./Item";
 
 function CategoryList({ items = [], completecategory }) {
-  return items.map((category, index) => (
-    <div
-      className={category.isComplete ? "category-row complete" : "category-row"}
-      key={index}
-    >
-      <div key={category.id} onClick={() => completecategory(category.id)}>
-        {category.text}
-      </div>
-      <div>X</div>
-      <div>Edit</div>
-    </div>
-  ));
+  return (
+    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
+      <List dense={true}>
+        {items.map((category, index) => (
+          <Item
+            complete={completecategory}
+            data={category}
+            key={category.id + "" + index}
+          />
+        ))}
+      </List>
+    </Box>
+  );
 }
 
 export default CategoryList;

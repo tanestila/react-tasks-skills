@@ -1,4 +1,4 @@
-import { Grid } from "@material-ui/core";
+import { Box, Divider, Grid, ListItemIcon } from "@material-ui/core";
 import { useRecoilState } from "recoil";
 import AddForm from "../components/AddForm";
 import { Chart } from "../components/RadarChart";
@@ -15,7 +15,10 @@ export default function Main() {
     setTodos(newTodos);
   };
 
-  const completeTodo = (todo) => {};
+  const completeTodo = (index) => {
+    const newTodos = [...todos];
+    // newTodos[index].complete = !newTodos[index].complete;
+  };
 
   return (
     <Grid
