@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Radar,
   RadarChart,
@@ -6,47 +6,27 @@ import {
   PolarAngleAxis,
   PolarRadiusAxis,
 } from "recharts";
-
-const data = [
-  {
-    subject: "Math",
-    A: 80,
-    B: 80,
-    fullMark: 100,
-  },
-  {
-    subject: "Chinese",
-    A: 98,
-    B: 98,
-    fullMark: 100,
-  },
-  {
-    subject: "English",
-    A: 10,
-    B: 10,
-    fullMark: 100,
-  },
-  {
-    subject: "Geography",
-    A: 80,
-    B: 80,
-    fullMark: 100,
-  },
-  {
-    subject: "Physics",
-    A: 20,
-    B: 50,
-    fullMark: 100,
-  },
-  {
-    subject: "History",
-    A: 65,
-    B: 85,
-    fullMark: 100,
-  },
-];
+import { useRecoilState } from "recoil";
+import { categoryListState, todoListState } from "../state";
 
 export function Chart() {
+  const [categories, setCategories] = useRecoilState(categoryListState);
+  const [todos, setTodos] = useRecoilState(todoListState);
+
+  const dataSet = categories.reduce((obj, item) => {
+    return { ...obj, [item.text]: 0 };
+  }, {});
+
+  useEffect(() => {
+    todos.forEach((item) => {
+      if (item.complete) {
+        dataSet[item.category] += 1;
+      }
+    });
+  }, [todos]);
+
+  console.log(dataSet);
+
   return (
     <RadarChart
       cx={300}
@@ -54,7 +34,7 @@ export function Chart() {
       outerRadius={150}
       width={500}
       height={500}
-      data={data}
+      data={dataSet}
     >
       <PolarGrid />
       <PolarAngleAxis dataKey="subject" />

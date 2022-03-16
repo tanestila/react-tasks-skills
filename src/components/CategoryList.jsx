@@ -1,20 +1,45 @@
 import React from "react";
 import { Box, List } from "@material-ui/core";
 import { Item } from "./Item";
+import { useRecoilState } from "recoil";
+import { categoryListState } from "../state";
+import AddForm from "./AddForm";
 
-function CategoryList({ items = [], completecategory }) {
+function CategoryList() {
+  const [categories, setCategories] = useRecoilState(categoryListState);
+
+  const addCategory = (category) => {
+    if (!category.text || /^\s*$/.test(category.text)) return;
+    const newCategories = [category, ...categories];
+    setCategories(newCategories);
+  };
+
+  const deleteTodo = (index) => {
+    const newCategories = [...categories];
+    newCategories.splice(index, 1);
+    setCategories(newCategories);
+  };
+
+  const editTodo = (index, todo) => {
+    const newCategories = [...categories];
+    newCategories[index] = {
+      ...newCategories[index],
+      ...todo,
+    };
+    setCategories(newCategories);
+  };
+
   return (
-    <Box sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
-      <List dense={true}>
-        {items.map((category, index) => (
-          <Item
-            complete={completecategory}
-            data={category}
-            key={category.id + "" + index}
-          />
-        ))}
-      </List>
-    </Box>
+    <>
+      <AddForm onSubmit={addCategory} />
+      <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
+        <List dense={true}>
+          {categories.map((category, index) => (
+            <Item data={category} key={category.id + "" + index} />
+          ))}
+        </List>
+      </Box>
+    </>
   );
 }
 

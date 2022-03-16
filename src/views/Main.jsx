@@ -1,25 +1,9 @@
-import { Box, Divider, Grid, ListItemIcon } from "@material-ui/core";
-import { useRecoilState } from "recoil";
-import AddForm from "../components/AddForm";
+import { Grid } from "@material-ui/core";
+
 import { Chart } from "../components/RadarChart";
 import TodoList from "../components/TodoList";
-import { todoListState } from "../state";
 
 export default function Main() {
-  const [todos, setTodos] = useRecoilState(todoListState);
-
-  const addTodo = (todo) => {
-    if (!todo.text || /^\s*$/.test(todo.text)) return;
-    console.log(todo);
-    const newTodos = [todo, ...todos];
-    setTodos(newTodos);
-  };
-
-  const completeTodo = (index) => {
-    const newTodos = [...todos];
-    // newTodos[index].complete = !newTodos[index].complete;
-  };
-
   return (
     <Grid
       container
@@ -28,8 +12,7 @@ export default function Main() {
       alignItems="flex-start"
     >
       <div>
-        <AddForm onSubmit={addTodo} />
-        <TodoList items={todos} completeTodo={completeTodo} />
+        <TodoList />
       </div>
       <div>
         <Chart />
