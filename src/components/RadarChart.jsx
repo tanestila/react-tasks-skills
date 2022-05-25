@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { useState } from "react";
 import {
   Radar,
   RadarChart,
@@ -13,19 +14,29 @@ export function Chart() {
   const [categories, setCategories] = useRecoilState(categoryListState);
   const [todos, setTodos] = useRecoilState(todoListState);
 
-  const dataSet = categories.reduce((obj, item) => {
-    return { ...obj, [item.text]: 0 };
-  }, {});
+  const [dataset, setDataset] = useState({});
 
   useEffect(() => {
+    const set = categories.reduce(
+      (arr, item) => {
+        return [...arr, { id: item.id, x: 0, name: item.text }];
+      },
+      [{ null: 0 }]
+    );
+    console.log(set);
+
     todos.forEach((item) => {
+      console.log(item.category);
       if (item.complete) {
-        dataSet[item.category] += 1;
+        let i = set.findIndex((value) => value.id === item.category);
+        if (i) set[i].x += 1;
+        console.log(set);
       }
     });
+    setDataset(set);
   }, [todos]);
 
-  console.log(dataSet);
+  console.log(dataset);
 
   return (
     <RadarChart
@@ -34,14 +45,14 @@ export function Chart() {
       outerRadius={150}
       width={500}
       height={500}
-      data={dataSet}
+      data={dataset}
     >
       <PolarGrid />
       <PolarAngleAxis dataKey="subject" />
       <PolarRadiusAxis />
       <Radar
         name="Mike"
-        dataKey="A"
+        dataKey="x"
         stroke="#8884d8"
         fill="#8884d8"
         fillOpacity={0.6}

@@ -58,10 +58,14 @@ export const Item = ({
   return (
     <>
       <ListItem>
-        <ListItemButton onClick={complete}>
-          {data.complete ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+        {isTodo ? (
+          <ListItemButton onClick={complete}>
+            {data.complete ? <CheckBoxIcon /> : <CheckBoxOutlineBlankIcon />}
+            <ListItemText primary={data.text} secondary={category ?? ""} />
+          </ListItemButton>
+        ) : (
           <ListItemText primary={data.text} secondary={category ?? ""} />
-        </ListItemButton>
+        )}
         <ListItemSecondaryAction>
           {isTodo && (
             <IconButton edge="start" aria-label="delete" onClick={onClickEdit}>

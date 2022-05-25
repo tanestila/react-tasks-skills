@@ -19,6 +19,7 @@ function AddForm({ onSubmit, type, categories = [] }) {
         text: input,
         complete: false,
         category: selectedCategory ?? null,
+        cost: 10,
       });
     } else {
       onSubmit({

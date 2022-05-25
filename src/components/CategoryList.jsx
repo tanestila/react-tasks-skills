@@ -14,18 +14,9 @@ function CategoryList() {
     setCategories(newCategories);
   };
 
-  const deleteTodo = (index) => {
+  const deleteCategory = (index) => {
     const newCategories = [...categories];
     newCategories.splice(index, 1);
-    setCategories(newCategories);
-  };
-
-  const editTodo = (index, todo) => {
-    const newCategories = [...categories];
-    newCategories[index] = {
-      ...newCategories[index],
-      ...todo,
-    };
     setCategories(newCategories);
   };
 
@@ -35,7 +26,12 @@ function CategoryList() {
       <Box sx={{ width: "100%", bgcolor: "background.paper" }}>
         <List dense={true}>
           {categories.map((category, index) => (
-            <Item data={category} key={category.id + "" + index} />
+            <Item
+              data={category}
+              key={category.id + "" + index}
+              type="category"
+              deleteTodo={deleteCategory}
+            />
           ))}
         </List>
       </Box>
